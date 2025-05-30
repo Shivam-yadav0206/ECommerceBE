@@ -1,0 +1,621 @@
+# AUTH
+#   -- /login
+#   -- /logout
+#   -- /signup
+#   -- /login/google
+
+
+# USER DETAILS
+#             -- /profile/view
+#             -- /profile/edit/password
+#             -- /profile/edit/
+#             -- /profile/stats/
+
+
+# PRODUCT
+#   -- /view/:productId (product + reviews)
+#   -- /review/add
+#   -- /review/edit
+#   -- /review/delete
+
+
+# CART + WISHLIST
+#   -- cart/viewItems
+#   -- cart/addItems
+#   -- cart/removeItems
+#   -- cart/emptyCart
+  # -- wishlist/viewItems
+  # -- wishlist/addItems
+  # -- wishlist/removeItems
+  # -- wishlist/emptyCart
+
+
+# FEED
+#   -- /getAllItems
+#   -- /getItemsByCategory
+  -- /getProductsminimalDetailsbyObjectId
+
+ORDER
+  -- /
+  -- /checkout
+  -- /cancel
+  -- /listAllOrders
+
+
+
+const notebook = const notebooks = [
+  {
+    name: "Dell XPS 13 Plus",
+    description: "Ultra-thin premium laptop with 12th Gen Intel Core and InfinityEdge display.",
+    price: 1299,
+    stock: 20,
+    imageUrl: "https://images.pexels.com/photos/1092652/pexels-photo-1092652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    category: "6827bfad058c645e30d4598c",
+    tags: ["laptop", "notebook", "dell"],
+    rating: { average: 4.7, count: 340 },
+    specs: {
+      processor: "Intel Core i7-1260P",
+      ram: "16GB LPDDR5",
+      storage: "512GB SSD",
+      display: "13.4-inch 4K+ OLED",
+      batteryLife: "12 hours",
+      color: "#3A3A3A,#FFFFFF,#C0C0C0",
+    },
+  },
+  {
+    name: "Apple MacBook Air M2",
+    description: "Lightweight notebook with M2 chip, exceptional performance and battery life.",
+    price: 1199,
+    stock: 30,
+    imageUrl: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFjYm9vayUyMHByb3xlbnwwfHwwfHx8MA%3D%3D",
+    category: "6827bfad058c645e30d4598c",
+    tags: ["macbook", "apple", "notebook"],
+    rating: { average: 4.8, count: 520 },
+    specs: {
+      processor: "Apple M2",
+      ram: "8GB Unified",
+      storage: "256GB SSD",
+      display: "13.6-inch Retina",
+      batteryLife: "18 hours",
+      color: "#3B3B3B,#F5F5F7,#D4AF37",
+    },
+  },
+  {
+    name: "HP Spectre x360 14",
+    description: "Convertible 2-in-1 notebook with touch display and long battery life.",
+    price: 1399,
+    stock: 25,
+    imageUrl: "https://www.shutterstock.com/shutterstock/photos/1302914473/display_1500/stock-photo-jakarta-indonesia-february-side-part-of-hp-spectre-x-convertible-laptop-1302914473.jpg",
+    category: "6827bfad058c645e30d4598c",
+    tags: ["hp", "notebook", "2-in-1"],
+    rating: { average: 4.6, count: 295 },
+    specs: {
+      processor: "Intel Core i7-1355U",
+      ram: "16GB",
+      storage: "1TB SSD",
+      display: "13.5-inch 3:2 OLED",
+      batteryLife: "17 hours",
+      color: "#1A1A1A,#B0B0B0,#E5C07B",
+    },
+  },
+  {
+    name: "Lenovo Yoga Slim 7i",
+    description: "Portable notebook with sleek aluminum chassis and strong battery life.",
+    price: 1049,
+    stock: 18,
+    imageUrl: "https://rukminim2.flixcart.com/image/850/1000/xif0q/computer/j/g/f/yoga-slim-7-thin-and-light-laptop-lenovo-original-imah46z8kmgg3yga.jpeg?q=90&crop=false",
+    category: "6827bfad058c645e30d4598c",
+    tags: ["lenovo", "notebook", "slim"],
+    rating: { average: 4.5, count: 220 },
+    specs: {
+      processor: "Intel Core i5-1240P",
+      ram: "16GB",
+      storage: "512GB SSD",
+      display: "14-inch 2.2K",
+      batteryLife: "15 hours",
+      color: "#4B4B4B,#DADADA,#89CFF0",
+    },
+  },
+  {
+    name: "Asus ZenBook 14 OLED",
+    description: "Stylish and powerful OLED notebook with ASUS AI noise-canceling tech.",
+    price: 999,
+    stock: 22,
+    imageUrl: "https://www.shutterstock.com/shutterstock/photos/2396987091/display_1500/stock-photo-jakarta-indonesia-december-creator-series-laptops-asus-zenbook-pro-duo-oled-2396987091.jpg",
+    category: "6827bfad058c645e30d4598c",
+    tags: ["asus", "zenbook", "notebook"],
+    rating: { average: 4.4, count: 180 },
+    specs: {
+      processor: "AMD Ryzen 7 7730U",
+      ram: "16GB",
+      storage: "512GB SSD",
+      display: "14-inch 2.8K OLED",
+      batteryLife: "13 hours",
+      color: "#2E2E2E,#FFFFFF,#FF8C00",
+    },
+  },
+  {
+    name: "Acer Swift X 14",
+    description: "Powerful notebook with dedicated GPU for creators and multitaskers.",
+    price: 899,
+    stock: 16,
+    imageUrl: "https://static1.xdaimages.com/wordpress/wp-content/uploads/wm/2024/05/acer-swift-x-14-side-top.jpg",
+    category: "6827bfad058c645e30d4598c",
+    tags: ["acer", "swift", "notebook"],
+    rating: { average: 4.3, count: 150 },
+    specs: {
+      processor: "Intel Core i7-13700H",
+      ram: "16GB",
+      storage: "1TB SSD",
+      display: "14.5-inch 2.8K IPS",
+      batteryLife: "12 hours",
+      color: "#404040,#A9A9A9,#ADD8E6",
+    },
+  }
+];
+
+
+
+const phones = [
+  {
+    name: "iPhone 15 Pro",
+    description:
+      "Apple flagship with A17 chip, Dynamic Island, and titanium body.",
+    price: 999,
+    stock: 35,
+    imageUrl:
+      "https://images.unsplash.com/photo-1710023038502-ba80a70a9f53?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "6827bfad058c645e30d4598a",
+    tags: ["smartphone", "apple", "ios"],
+    rating: { average: 4.8, count: 1120 },
+    specs: {
+      display: "6.1-inch Super Retina XDR",
+      batteryLife: "23 hours",
+      waterResistance: "IP68",
+      fitnessTracking: "Health app, ECG",
+      compatibility: "iOS",
+      color: "#8E8E93,#D1D1D6,#1C1C1E",
+    },
+  },
+  {
+    name: "Samsung Galaxy S24 Ultra",
+    description:
+      "Flagship Android phone with 200MP camera, S Pen, and Snapdragon 8 Gen 3.",
+    price: 1299,
+    stock: 28,
+    imageUrl:
+      "https://img.freepik.com/premium-photo/mobile-fold-back-left-side-white-background_187299-23650.jpg?ga=GA1.1.1815305671.1748350906&semt=ais_hybrid&w=740",
+    category: "6827bfad058c645e30d4598a",
+    tags: ["smartphone", "android", "samsung"],
+    rating: { average: 4.6, count: 900 },
+    specs: {
+      display: "6.8-inch QHD+ AMOLED",
+      batteryLife: "36 hours",
+      waterResistance: "IP68",
+      fitnessTracking: "Samsung Health",
+      compatibility: "Android",
+      color: "#5E5E5E,#F1F1F1,#000000"
+    },
+  },
+  {
+    name: "Google Pixel 8 Pro",
+    description:
+      "AI-powered smartphone with Tensor G3 chip and advanced camera features.",
+    price: 999,
+    stock: 22,
+    imageUrl:
+      "https://images.pexels.com/photos/32218867/pexels-photo-32218867/free-photo-of-google-pixel-9-smartphone-and-box-on-display.jpeg",
+    category: "6827bfad058c645e30d4598a",
+    tags: ["smartphone", "android", "google"],
+    rating: { average: 4.5, count: 670 },
+    specs: {
+      display: "6.7-inch LTPO OLED",
+      batteryLife: "31 hours",
+      waterResistance: "IP68",
+      fitnessTracking: "Google Fit",
+      compatibility: "Android",
+      color: "#000000,#F5F5F5,#C0C0C0"
+    },
+  },
+  {
+    name: "OnePlus 12",
+    description:
+      "Flagship killer with Snapdragon 8 Gen 3, fast charging, and AMOLED display.",
+    price: 749,
+    stock: 40,
+    imageUrl:
+      "https://cubotlifestyle.com/cdn/shop/files/Untitleddesign-2024-03-29T170402.519.png?v=1711789687&width=1445",
+    category: "6827bfad058c645e30d4598a",
+    tags: ["smartphone", "android", "oneplus"],
+    rating: { average: 4.3, count: 550 },
+    specs: {
+      display: "6.82-inch AMOLED 120Hz",
+      batteryLife: "35 hours",
+      waterResistance: "IP65",
+      fitnessTracking: "OnePlus Health",
+      compatibility: "Android",
+      color: "#2E8B57,#000000,#F5F5F5",
+    },
+  },
+  {
+    name: "Nothing Phone 2",
+    description:
+      "Unique transparent design with Glyph interface and clean Android experience.",
+    price: 599,
+    stock: 30,
+    imageUrl:
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=2118&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    category: "6827bfad058c645e30d4598a",
+    tags: ["smartphone", "android", "nothing"],
+    rating: { average: 4.2, count: 420 },
+    specs: {
+      display: "6.7-inch OLED 120Hz",
+      batteryLife: "30 hours",
+      waterResistance: "IP54",
+      fitnessTracking: "Google Fit",
+      compatibility: "Android",
+      color: "#F5F5F5,#222222",
+    },
+  },
+  {
+    name: "Xiaomi 14 Ultra",
+    description:
+      "Premium Android phone with Leica optics, Snapdragon 8 Gen 3, and large battery.",
+    price: 899,
+    stock: 38,
+    imageUrl:
+      "https://images.pexels.com/photos/1482061/pexels-photo-1482061.jpeg?auto=compress&cs=tinysrgb&w=600",
+    category: "6827bfad058c645e30d4598a",
+    tags: ["smartphone", "android", "xiaomi"],
+    rating: { average: 4.4, count: 490 },
+    specs: {
+      display: "6.73-inch AMOLED QHD+",
+      batteryLife: "40 hours",
+      waterResistance: "IP68",
+      fitnessTracking: "Mi Fit",
+      compatibility: "Android",
+      color: "#FFFFFF,#000000",
+    },
+  },
+];
+
+
+
+
+
+
+
+
+const Review = require("./models/Review");  // Assuming Review is the schema name
+
+const reviews = [
+  {
+    user: "6827cdc6fece6cbdb21788bf",  // User 1
+    product: "6827c5411fe8195b07ae4377",  // Samsung Galaxy Watch 6
+    rating: 5,
+    comment: "Absolutely love the Samsung Galaxy Watch 6! The AMOLED display is vibrant, and the fitness tracking features are amazing!",
+    imageUrl: "https://example.com/images/review1.jpg"
+  },
+  {
+    user: "6827cd5dfece6cbdb21788ba",  // User 2
+    product: "6827c5411fe8195b07ae4377",  // Samsung Galaxy Watch 6
+    rating: 4,
+    comment: "Great smartwatch! Battery life could be a bit longer, but overall it's fantastic for fitness tracking.",
+    imageUrl: null
+  },
+  {
+    user: "6827cdc6fece6cbdb21788bf",  // User 1
+    product: "6827c5411fe8195b07ae4378",  // Sony PlayStation 5 Console
+    rating: 5,
+    comment: "The PS5 is a game-changer! The graphics are stunning, and the controller feels so immersive. Worth every penny!",
+    imageUrl: "https://example.com/images/review2.jpg"
+  },
+  {
+    user: "6827cd5dfece6cbdb21788ba",  // User 2
+    product: "6827c5411fe8195b07ae4378",  // Sony PlayStation 5 Console
+    rating: 4,
+    comment: "The PS5 is great, but I wish it was easier to find more games in stock. Otherwise, an excellent console.",
+    imageUrl: "https://example.com/images/review3.jpg"
+  },
+  {
+    user: "6827cdc6fece6cbdb21788bf",  // User 1
+    product: "6827c5411fe8195b07ae4379",  // MacBook Air M2 (2023)
+    rating: 5,
+    comment: "The MacBook Air M2 is incredibly fast and lightweight. Perfect for my work and everyday use. Apple's best laptop yet!",
+    imageUrl: "https://example.com/images/review4.jpg"
+  },
+  {
+    user: "6827cd5dfece6cbdb21788ba",  // User 2
+    product: "6827c5411fe8195b07ae4379",  // MacBook Air M2 (2023)
+    rating: 5,
+    comment: "Impressive performance and great battery life. A bit pricey, but totally worth it for the performance.",
+    imageUrl: null
+  },
+  {
+    user: "6827cdc6fece6cbdb21788bf",  // User 1
+    product: "6827c5411fe8195b07ae437a",  // Samsung 55-Inch 4K Smart TV
+    rating: 4,
+    comment: "The TV is great for watching movies and playing games. The 4K resolution is amazing, but the interface could be better.",
+    imageUrl: "https://example.com/images/review5.jpg"
+  },
+  {
+    user: "6827cd5dfece6cbdb21788ba",  // User 2
+    product: "6827c5411fe8195b07ae437a",  // Samsung 55-Inch 4K Smart TV
+    rating: 5,
+    comment: "Incredible picture quality and easy setup. The smart TV features are fantastic, and it's great for streaming.",
+    imageUrl: "https://example.com/images/review6.jpg"
+  },
+  {
+    user: "6827cdc6fece6cbdb21788bf",  // User 1
+    product: "6827c5411fe8195b07ae437b",  // iPhone 15 Pro Max
+    rating: 5,
+    comment: "The iPhone 15 Pro Max is powerful, and the new design feels amazing. The camera and performance are top-notch.",
+    imageUrl: "https://example.com/images/review7.jpg"
+  },
+  {
+    user: "6827cd5dfece6cbdb21788ba",  // User 2
+    product: "6827c5411fe8195b07ae437b",  // iPhone 15 Pro Max
+    rating: 4,
+    comment: "Great phone, but it's a bit too expensive. The performance is stellar, and the new design looks fantastic.",
+    imageUrl: null
+  }
+];
+
+
+
+
+
+
+    const categories = [
+      {
+        name: "Mobile",
+        description: "All kinds of mobile devices and accessories.",
+      },
+      {
+        name: "Laptops",
+        description: "Find high-performance and budget laptops.",
+      },
+      {
+        name: "Smart Watches",
+        description: "Wearable technology and smart accessories.",
+      },
+      { name: "Consoles", description: "Gaming consoles from top brands." },
+      { name: "Games", description: "Games for all platforms and genres." },
+      {
+        name: "Peripherals",
+        description: "Keyboards, mice, and other accessories.",
+      },
+      { name: "Computers", description: "Desktops and custom PC builds." },
+      { name: "Gaming", description: "Gaming gear, accessories, and more." },
+      {
+        name: "Tablet",
+        description: "Tablets for productivity and entertainment.",
+      },
+      { name: "Software", description: "Licensed software and digital tools." },
+      {
+        name: "Others",
+        description: "Some items just can't be categorized",
+      },
+    ];
+
+    const mockdata = [
+  {
+    name: "Samsung Galaxy Watch 6",
+    description:
+      "Health-focused smartwatch with AMOLED display, fitness tracking, and smart assistant support.",
+    price: 349,
+    stock: 40,
+    imageUrl: "https://example.com/images/galaxy-watch6.jpg",
+    category: new mongoose.Types.ObjectId("6827bfad058c645e30d4598e"),
+    tags: ["smartwatch", "wearable", "samsung"],
+    rating: { average: 4.4, count: 610 },
+    specs: {
+      display: "1.5-inch AMOLED",
+      batteryLife: "40 hours",
+      waterResistance: "5ATM",
+      fitnessTracking: "Heart rate, SpO2, Sleep",
+      compatibility: "Android",
+    },
+  },
+  {
+    name: "Sony PlayStation 5 Console",
+    description:
+      "Next-generation gaming console with stunning 4K visuals, fast loading, and an immersive controller.",
+    price: 499,
+    stock: 80,
+    imageUrl: "https://example.com/images/ps5.jpg",
+    category: new mongoose.Types.ObjectId("6827bfad058c645e30d45992"),
+    tags: ["gaming", "console", "ps5", "sony"],
+    rating: { average: 4.7, count: 2045 },
+    specs: {
+      storage: "825GB SSD",
+      resolution: "4K UHD",
+      controller: "DualSense",
+      ports: "USB, HDMI",
+    },
+  },
+  {
+    name: "MacBook Air M2 (2023)",
+    description:
+      "Ultra-portable laptop powered by Apple's M2 chip, delivering performance and battery life.",
+    price: 1199,
+    stock: 25,
+    imageUrl: "https://example.com/images/macbook-air.jpg",
+    category: new mongoose.Types.ObjectId("6827bfad058c645e30d45996"),
+    tags: ["laptop", "apple", "macbook", "ultrabook"],
+    rating: { average: 4.9, count: 850 },
+    specs: {
+      ram: "16GB",
+      storage: "512GB SSD",
+      chip: "Apple M2",
+      display: "13.6-inch Retina",
+      weight: "1.24 kg",
+    },
+  },
+  {
+    name: "Samsung 55-Inch 4K Smart TV",
+    description:
+      "Smart TV with Crystal UHD display, 4K resolution, and Tizen OS for seamless streaming.",
+    price: 699,
+    stock: 30,
+    imageUrl: "https://example.com/images/samsung-tv.jpg",
+    category: new mongoose.Types.ObjectId("6827bfad058c645e30d45990"),
+    tags: ["tv", "samsung", "4k", "smart"],
+    rating: { average: 4.5, count: 320 },
+    specs: {
+      displaySize: "55 inch",
+      resolution: "3840 x 2160",
+      smartOS: "Tizen",
+      hdmiPorts: "3",
+      refreshRate: "60Hz",
+    },
+  },
+  {
+    name: "iPhone 15 Pro Max",
+    description:
+      "The most powerful iPhone ever, featuring the A17 Pro chip and an all-new titanium design.",
+    price: 1299,
+    stock: 50,
+    imageUrl: "https://example.com/images/iphone15.jpg",
+    category: new mongoose.Types.ObjectId("6827bfad058c645e30d4598a"),
+    tags: ["smartphone", "apple", "iphone", "mobile"],
+    rating: { average: 4.8, count: 1534 },
+    specs: {
+      storage: "256GB",
+      ram: "8GB",
+      processor: "A17 Pro",
+      display: "6.7-inch OLED",
+      battery: "4323mAh",
+    },
+  },
+];
+
+
+
+//Odl UI products schema
+
+const sampleProducts: ProductProps[] = [
+  {
+    id: "1",
+    name: "Apple Macbook Air 13",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    oldPrice: 50.0,
+    imageSrc: "https://ext.same-assets.com/580693019/2181847545.jpeg",
+    category: "notebooks",
+    colors: ["silver", "gray", "black"],
+    sizes: ["S", "M", "L", "XL"],
+    discount: 25,
+  },
+  {
+    id: "2",
+    name: "PlayStation 5",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    oldPrice: 50.0,
+    imageSrc: "https://ext.same-assets.com/3282655564/110510356.jpeg",
+    category: "gaming",
+    colors: ["white"],
+    sizes: ["S", "M", "L", "XL"],
+    discount: 25,
+  },
+  {
+    id: "3",
+    name: "Mousepad Hyperx Fury S Pro Speed",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    oldPrice: 50.0,
+    imageSrc: "https://ext.same-assets.com/1900054103/2073976333.jpeg",
+    category: "peripherals",
+    sizes: ["S", "M", "L", "XL"],
+    discount: 25,
+  },
+  {
+    id: "4",
+    name: "Ryzen 5 3600x",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    oldPrice: 50.0,
+    imageSrc: "https://ext.same-assets.com/1553432884/3131712931.jpeg",
+    category: "processors",
+    colors: ["black"],
+    sizes: ["S", "M", "L", "XL"],
+    discount: 25,
+  },
+];
+
+const notebooksProducts: ProductProps[] = [
+  {
+    id: "5",
+    name: "Apple Macbook Air 13",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    imageSrc: "https://ext.same-assets.com/580693019/2181847545.jpeg",
+    category: "notebooks",
+    colors: ["silver", "gray", "black"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: "6",
+    name: "Asus ZenBook 14",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    imageSrc: "https://ext.same-assets.com/3339248820/3054069754.jpeg",
+    category: "notebooks",
+    colors: ["blue", "black"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: "7",
+    name: "Lenovo V15",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    imageSrc: "https://ext.same-assets.com/4081411006/2395157374.jpeg",
+    category: "notebooks",
+    colors: ["black"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+];
+
+const smartphonesProducts: ProductProps[] = [
+  {
+    id: "8",
+    name: "Moto e7i Power",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    imageSrc: "https://ext.same-assets.com/2391091884/3040454568.jpeg",
+    category: "smartphones",
+    colors: ["blue", "black"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: "9",
+    name: "iPhone 12 Mini",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    imageSrc: "https://ext.same-assets.com/1238574416/3460997929.jpeg",
+    category: "smartphones",
+    colors: ["red", "black", "white", "blue"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+  {
+    id: "10",
+    name: "Samsung A12",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque culpa, odio, qui praesentium dignissimos eaque dolorum porro alias neque, eius animi ipsa voluptates.",
+    price: 37.0,
+    imageSrc: "https://ext.same-assets.com/457899182/3476072939.jpeg",
+    category: "smartphones",
+    colors: ["blue", "black", "white", "red"],
+    sizes: ["S", "M", "L", "XL"],
+  },
+];
