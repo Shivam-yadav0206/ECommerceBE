@@ -24,10 +24,7 @@ const cors = require("cors");
 const addressRouter = require("./routes/address");
 
 // Enable CORS for all routes and origins
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://your-frontend-domain.com",
-];
+const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URI];
 
 app.use(
   cors({
