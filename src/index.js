@@ -57,12 +57,12 @@ connectDb()
 
 // Test Route (for testing purposes)
 
-app.use("/test", userAuth, async (req, res, next) => {
+app.get("/test", async (req, res, next) => {
   try {
     //console.log(req.user.cart)
     await Product.insertMany(notebook);
 
-    res.send({ message: "✅ Products seeded successfully!" });
+    res.send("✅ server running successfully!");
   } catch (err) {
     //console.error("❌ Error:", err.message);
     res.status(500).send("Error seeding products: " + err.message);
