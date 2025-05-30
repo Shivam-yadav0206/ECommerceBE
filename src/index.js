@@ -24,14 +24,17 @@ const cors = require("cors");
 const addressRouter = require("./routes/address");
 
 // Enable CORS for all routes and origins
-const allowedOrigins = ["http://localhost:3000", process.env.FRONTEND_URI];
+const allowedOrigins = [
+  "https://megabyte-rose.vercel.app",
+  "http://localhost:3000",
+  process.env.FRONTEND_URI,
+];
 
 app.use(
   cors({
     origin: function (origin, callback) {
       // allow requests with no origin like mobile apps or curl requests
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       } else {
         return callback(new Error("Not allowed by CORS"));
@@ -40,6 +43,7 @@ app.use(
     credentials: true, // if you're using cookies or authorization headers
   })
 );
+
 // Middleware Setup
 app.use(express.json());
 app.use(cookieParser());

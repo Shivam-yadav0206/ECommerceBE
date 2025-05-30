@@ -8,7 +8,7 @@ const {
   verifyGoogleToken,
 } = require("../utils/validation");
 const authRouter = express.Router();
-const {sanitizeUser} = require("../utils/sanitize")
+const { sanitizeUser } = require("../utils/sanitize");
 authRouter.post("/signup", async (req, res) => {
   try {
     validateSignUpData(req);
@@ -104,8 +104,18 @@ authRouter.post("/login", async (req, res) => {
 
     // Generate JWT token
     const token = await user.getJWT();
+    // res
+    //   .cookie("token", token, { expires: new Date(Date.now() + 8 * 3600000) })
+    //   .status(200)
+    //   .send(sanitizeUser(user));
+
     res
-      .cookie("token", token, { expires: new Date(Date.now() + 8 * 3600000) })
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true, // ✅ Important for HTTPS
+        sameSite: "None", // ✅ Required when using cross-site cookies
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+      })
       .status(200)
       .send(sanitizeUser(user));
   } catch (err) {
@@ -115,7 +125,10 @@ authRouter.post("/login", async (req, res) => {
 
 authRouter.post("/logout", async (req, res) => {
   try {
-    res.cookie("token", null, {expires: new Date(Date.now()),}).status(200).send("Logged out successfully");
+    res
+      .cookie("token", null, { expires: new Date(Date.now()) })
+      .status(200)
+      .send("Logged out successfully");
   } catch (err) {
     res.status(400).send("ERROR: " + err.message);
   }
