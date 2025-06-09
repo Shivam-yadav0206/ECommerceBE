@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 
 wishlistRouter.get("/wish/viewItems", userAuth, async (req, res) => {
   try {
-    const items = req.user.cart;
+    const items = req.user.wishlist;
     const objectIds = [];
 
     for (const item of items) {
