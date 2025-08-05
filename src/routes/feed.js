@@ -31,11 +31,13 @@ feedRouter.get("/feed", async (req, res) => {
   }
 });
 
+
 feedRouter.get("/feed/:catId", async (req, res) => {
   try {
     const { catId } = req.params;
+    const SMARTPHONE_ID = "6827bfad058c645e30d4598a";
 
-    // ✅ If catId is not a valid Mongo ObjectId, return empty data
+    // ✅ If catId is not a valid Mongo ObjectId → return empty array
     if (!validator.isMongoId(catId)) {
       return res.status(200).json({
         data: [],
@@ -46,22 +48,23 @@ feedRouter.get("/feed/:catId", async (req, res) => {
       });
     }
 
-    // Default category details
+    let productDetails = [];
     let catName = "Others";
     let catDesc = "Some items just can't be categorized";
 
-    // ✅ Fetch products for given category
-    const productDetails = await Product.find({ category: catId });
-
-    // ✅ Update category details if it's a known category
-    if (catId === "6827bfad058c645e30d4598a") {
+    // ✅ If catId is Smartphones ID → fetch only smartphones
+    if (catId === SMARTPHONE_ID) {
       catName = "Smartphones";
       catDesc = "All kinds of mobile devices and accessories.";
+      productDetails = await Product.find({ category: SMARTPHONE_ID });
+    } else {
+      // ✅ For any other valid category → fetch all except smartphones
+      productDetails = await Product.find({ category: { $ne: SMARTPHONE_ID } });
     }
 
-    // ✅ Always return 200 with data (even if empty)
+    // ✅ Always return status 200 with data
     res.status(200).json({
-      data: productDetails || [],
+      data: productDetails,
       category: { name: catName, description: catDesc },
     });
   } catch (err) {
