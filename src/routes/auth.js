@@ -127,9 +127,9 @@ authRouter.post("/logout", async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/", // ensure it clears for all routes
+      secure: process.env.NODE_ENV === "production", // ✅ secure only in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // ✅ none for cross-site on Vercel
+      path: "/", // ✅ clear cookie across all routes
     });
 
     res.status(200).json({ message: "Logged out successfully" });
@@ -137,6 +137,7 @@ authRouter.post("/logout", async (req, res) => {
     res.status(400).json({ error: "ERROR: " + err.message });
   }
 });
+
 
 
 module.exports = authRouter;
