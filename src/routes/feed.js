@@ -33,35 +33,36 @@ feedRouter.get("/feed", async (req, res) => {
 feedRouter.get("/feed/:catId", async (req, res) => {
   try {
     const { catId } = req.params;
-    //console.log(catId)
 
-    // Find all products by category ID
-    let productDetails, catName, catDesc;
+    // Default category details
+    let catName = "Others";
+    let catDesc = "Some items just can't be categorized";
 
+    // ✅ Fetch products for given category
+    let productDetails = await Product.find({ category: catId });
+
+    // ✅ Update category details if it's a known category
     if (catId === "6827bfad058c645e30d4598a") {
       catName = "Smartphones";
       catDesc = "All kinds of mobile devices and accessories.";
-      productDetails = await Product.find({ category: catId });
-    } else {
-      catName = "Others";
-      catDesc = "Some items just can't be categorized";
-      productDetails = await Product.find({ category: { $ne: catId } });
     }
 
-    if (!productDetails || productDetails.length === 0) {
-      return res.status(404).json({ error: "Products not found" });
-    }
-
-    res
-      .status(200)
-      .json({
-        data: productDetails,
-        category: { name: catName, description: catDesc },
-      });
+    // ✅ Always return 200 with data (even if empty)
+    res.status(200).json({
+      data: productDetails || [],
+      category: { name: catName, description: catDesc },
+    });
   } catch (err) {
     console.error("❌ Error fetching products:", err.message);
-    res.status(500).json({ error: "Server error" });
+    res.status(200).json({
+      data: [],
+      category: {
+        name: "Others",
+        description: "Some items just can't be categorized",
+      },
+    });
   }
 });
+
 
 module.exports = feedRouter;
