@@ -1,4 +1,5 @@
 const express = require("express");
+const validator = require("validator");
 const { userAuth } = require("../middlewares/auth");
 const Product = require("../models/product");
 
@@ -34,12 +35,23 @@ feedRouter.get("/feed/:catId", async (req, res) => {
   try {
     const { catId } = req.params;
 
+    // ✅ If catId is not a valid Mongo ObjectId, return empty data
+    if (!validator.isMongoId(catId)) {
+      return res.status(200).json({
+        data: [],
+        category: {
+          name: "Others",
+          description: "Some items just can't be categorized",
+        },
+      });
+    }
+
     // Default category details
     let catName = "Others";
     let catDesc = "Some items just can't be categorized";
 
     // ✅ Fetch products for given category
-    let productDetails = await Product.find({ category: catId });
+    const productDetails = await Product.find({ category: catId });
 
     // ✅ Update category details if it's a known category
     if (catId === "6827bfad058c645e30d4598a") {
@@ -63,6 +75,7 @@ feedRouter.get("/feed/:catId", async (req, res) => {
     });
   }
 });
+
 
 
 module.exports = feedRouter;
